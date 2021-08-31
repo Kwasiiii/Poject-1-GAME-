@@ -1,11 +1,10 @@
 function init(){
-  const startButton = document.querySelector('#start')
-  function disableButton(){
-    startButton.setAttribute('disabled', '')
-  }
   //Elements
   const grid = document.querySelector('.grid')
   const start = document.getElementById('start')
+  const startButton = document.querySelector('#start')
+  const scoreResult = document.getElementById('score')
+  const liveResult = document.getElementById('lives')
 
   //Variables
   const alienInvaders = [ 1, 2, 3, 4, 5, 6, 7, 8,
@@ -22,15 +21,22 @@ function init(){
   let currentPosition = startingPosition
   let direction = 1
   let moveRight = true
+  let score = 0
+  let lives = 3
 
   const laser = 'shooterlaser'
+  const alienLaser = 'alienlaser'
+
+  function disableButton(){
+    startButton.setAttribute('disabled', '')
+  }
 
   //Execution
   //create grid to start the game and add rocketship and alien-invaders
   function creategrid (){
     for (let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')//creating new element div
-      cell.innerText = i //add index as innerText
+      // cell.innerText = i //add index as innerText
       grid.appendChild(cell) //Append cell to grid
       cells.push(cell) //Push cell into array cells
     } 
@@ -38,6 +44,7 @@ function init(){
     addAliens()
     move
     disableButton()
+    alienShooter()
   }
 
   //Create a function called addShip @para 'cellposition'
@@ -130,17 +137,39 @@ function init(){
 
       if (cells[laserCurrentPosition].classList.contains(aliens)){
         cells[laserCurrentPosition].classList.remove(laser)
-        cells[laserCurrentPosition].classList.remove(aliens)   
+        cells[laserCurrentPosition].classList.remove(aliens)
+        score += 100  
         clearInterval(bulletTimer)   
         const alienRemoved = alienInvaders.indexOf(laserCurrentPosition)
         deadAlien.push(alienRemoved) 
       }
-      
     }
+    scoreResult.innerText = score
     if (event.keyCode === 32){
       bulletTimer = setInterval(shooterShoot, 100)
     }
   }
+
+  // function alienShooter(){
+    
+  //   // console.log(alienLaserPosition)
+  //   setInterval(() => {
+  //     let alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))]
+  //     cells[alienLaserPosition].classList.remove(alienLaser)
+  //     alienLaserPosition += width
+  //     cells[alienLaserPosition].classList.add(alienLaser)
+  //     clearInterval()
+  //     if (cells[alienLaserPosition].classList.contains(rocketShip)){
+  //       lives --
+  //       if (lives === 0){
+  //         window.alert('GAME OVER!')
+  //       }
+  //     }
+  //   }, 1000)
+
+  //   liveResult.innerText = lives
+  // }
+
   document.addEventListener('keyup', bullet)
 
   const move = setInterval(moveAliens, 1000)

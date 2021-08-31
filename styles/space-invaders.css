@@ -5,51 +5,89 @@
 body{
   height: 100vh;
   margin: 0;
+  background-image: url('../images/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .header{
+  display: inline;
+  text-align: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  height: 50px; 
 }
 
+.header button{
+  border: none;
+  font-size: 40px;
+  color: rgba(37, 251, 251, 0.777);
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.header p{
+  color:black;
+  font-size: 48px;
+  margin-left: 3%;
+  color: pink;
+  height: 50px;
+}
+
+
+
+
 .grid-wrapper{
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
   display: flex;
   justify-content: center;
-  background-color: lightgrey;
+  background-color: inherit;
+  background-size: cover;
+  background-position: center;
 }
 
 .grid{
   display: flex;
   flex-wrap: wrap;
-  width: 600px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  width: 30vw;
+  height: 70vh;
+  box-shadow: 0 0 20px rgba(218, 134, 31, 0.8);
+  margin-top: 5%;
+  
 }
 
 .grid div{
   width: 10%;
   height: 10%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
 .ship{
-  background-image: url('../images/rocket.png');
+  background-image: url('../images/pacmanup.png');
   background-size: 90%;
   background-position:center;
   background-repeat: no-repeat;
 }
 
 .alienship{
-  background-image: url('../images/RedInvader.png');
-  background-size: cover;
+  background-image: url('../images/blue_ghost.png');
+  background-size: 50%;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .shooterlaser{
+  background-image: url('../images/apple.png');
+  background-size: 40%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.alienlaser{
   background-image: url('../images/lazer.png');
-  background-size: cover;
+  background-size: 40%;
   background-position: center;
   background-repeat: no-repeat;
 }
