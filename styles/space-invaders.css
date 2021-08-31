@@ -1,0 +1,55 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  height: 100vh;
+  margin: 0;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-wrapper{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  background-color: lightgrey;
+}
+
+.grid{
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.grid div{
+  width: 10%;
+  height: 10%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.ship{
+  background-image: url('../images/rocket.png');
+  background-size: 90%;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+
+.alienship{
+  background-image: url('../images/RedInvader.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.shooterlaser{
+  background-image: url('../images/lazer.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
