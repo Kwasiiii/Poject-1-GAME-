@@ -44,7 +44,7 @@ function init(){
     addAliens()
     move
     disableButton()
-    alienShooter()
+    // alienShooter()
   }
 
   //Create a function called addShip @para 'cellposition'
