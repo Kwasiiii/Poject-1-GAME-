@@ -11,6 +11,13 @@ body{
   background-position: center;
 }
 
+.fas {
+  position: absolute;
+  color: white;
+  top: 1%;
+  left: 20px;
+}
+
 .header{
   display: inline;
   text-align: center;
@@ -22,7 +29,7 @@ body{
 .header button{
   border: none;
   font-size: 40px;
-  color: rgba(37, 251, 251, 0.777);
+  color: rgba(251, 244, 37, 0.994);
   background-color: inherit;
   cursor: pointer;
 }
@@ -31,12 +38,9 @@ body{
   color:black;
   font-size: 48px;
   margin-left: 3%;
-  color: pink;
+  color: rgb(240, 24, 24);
   height: 50px;
 }
-
-
-
 
 .grid-wrapper{
   height: 80vh;
@@ -55,7 +59,6 @@ body{
   height: 70vh;
   box-shadow: 0 0 20px rgba(218, 134, 31, 0.8);
   margin-top: 5%;
-  
 }
 
 .grid div{
@@ -87,7 +90,7 @@ body{
 
 .alienlaser{
   background-image: url('../images/lazer.png');
-  background-size: 40%;
+  background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
 }

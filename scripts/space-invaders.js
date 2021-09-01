@@ -5,6 +5,11 @@ function init(){
   const startButton = document.querySelector('#start')
   const scoreResult = document.getElementById('score')
   const liveResult = document.getElementById('lives')
+  const audioBtn = document.querySelector('i')
+  const audio = new Audio('audio/themeaudio.mp3')
+  const pacmanShootAudio = new Audio('audio/pacman_eatfruit.wav')
+  const pacmanDeathAudio = new Audio('audio/pacman_death.wav')
+  const alienDeathAudio = new Audio('audio/pacman_chomp.wav')
 
   //Variables
   const alienInvaders = [ 1, 2, 3, 4, 5, 6, 7, 8,
@@ -24,12 +29,14 @@ function init(){
   let score = 0
   let lives = 3
 
-  const laser = 'shooterlaser'
+  const laser = 'shooterlaser' 
   const alienLaser = 'alienlaser'
 
   function disableButton(){
     startButton.setAttribute('disabled', '')
+    startButton.style.display = 'none'
   }
+
 
   //Execution
   //create grid to start the game and add rocketship and alien-invaders
@@ -44,7 +51,31 @@ function init(){
     addAliens()
     move
     disableButton()
-    // alienShooter()
+    setInterval(alienBullet, 1000)
+  }
+
+  function themeSong(event){
+    if (audio.paused){
+      event.target.classList.remove('fa-pause')
+      event.target.classList.add('fa-play')
+      audio.play()
+    } else {
+      event.target.classList.remove('fa-play')
+      event.target.classList.add('fa-pause')
+      audio.pause()
+    } 
+  }
+
+  function pacmanLaserSound(){
+    pacmanShootAudio.play()
+  }
+
+  function pacmanDeathSound(){
+    pacmanDeathAudio.play()
+  }
+
+  function alienDeathSound(){
+    alienDeathAudio.play()
   }
 
   //Create a function called addShip @para 'cellposition'
@@ -124,6 +155,7 @@ function init(){
       alienInvaders[i] += direction
     }
     addAliens()
+    
   }
 
   function bullet(event){
@@ -139,43 +171,46 @@ function init(){
         cells[laserCurrentPosition].classList.remove(laser)
         cells[laserCurrentPosition].classList.remove(aliens)
         score += 100  
-        clearInterval(bulletTimer)   
+        clearInterval(bulletTimer) 
         const alienRemoved = alienInvaders.indexOf(laserCurrentPosition)
         deadAlien.push(alienRemoved) 
+        alienDeathSound()
       }
     }
     scoreResult.innerText = score
     if (event.keyCode === 32){
+      pacmanLaserSound()
       bulletTimer = setInterval(shooterShoot, 100)
     }
   }
 
-  // function alienShooter(){
+  function alienBullet(){  
+    // console.log(alienLaserPosition)
+    let alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))]  
+    setInterval(()=>{
+      cells[alienLaserPosition].classList.remove(alienLaser)     
+      alienLaserPosition += width
+      cells[alienLaserPosition].classList.add(alienLaser)    
+      if (cells[alienLaserPosition].classList.contains(rocketShip)){
+        lives --
+        pacmanDeathSound()
+        if (lives === 0){
+          window.alert('GAME OVER!')
+        }
+        clearInterval()
+      }
+
+    },200)
     
-  //   // console.log(alienLaserPosition)
-  //   setInterval(() => {
-  //     let alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))]
-  //     cells[alienLaserPosition].classList.remove(alienLaser)
-  //     alienLaserPosition += width
-  //     cells[alienLaserPosition].classList.add(alienLaser)
-  //     clearInterval()
-  //     if (cells[alienLaserPosition].classList.contains(rocketShip)){
-  //       lives --
-  //       if (lives === 0){
-  //         window.alert('GAME OVER!')
-  //       }
-  //     }
-  //   }, 1000)
-
-  //   liveResult.innerText = lives
-  // }
-
+    liveResult.innerText = lives
+  }
+  //Events
   document.addEventListener('keyup', bullet)
 
   const move = setInterval(moveAliens, 1000)
-  
+  audioBtn.addEventListener('click', themeSong)
   document.addEventListener('keydown', handleKeyDown) // Listening for key press
   start.addEventListener('click', creategrid)
-
+  
 }
 window.addEventListener('DOMContentLoaded', init)
