@@ -1,22 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 *{
   box-sizing: border-box;
 }
 
+/* 
+  Styling body of game 
+  setting height to 100 view height 
+  Adding background image to the body
+  And positioning
+*/
 body{
   height: 100vh;
   margin: 0;
+  font-family: 'Press Start 2P', cursive;
   background-image: url('../images/background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
+/* 
+  Styling fontawesome play and pause button
+  Positioning it at the top left corner
+*/
 .fas {
   position: absolute;
   color: white;
   top: 1%;
   left: 20px;
 }
+
 
 .header{
   display: inline;
@@ -36,8 +50,9 @@ body{
 
 .header p{
   color:black;
-  font-size: 48px;
-  margin-left: 3%;
+  font-size: 30px;
+  margin-left: 1%;
+  margin-top: 3%;
   color: rgb(240, 24, 24);
   height: 50px;
 }
@@ -64,8 +79,44 @@ body{
 .grid div{
   width: 10%;
   height: 10%;
-  /* border: 1px solid rgba(0, 0, 0, 0.2); */
 }
+
+.result-screen{
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+#vic-los{
+  font-family: inherit;
+  font-size: 50px;
+  color: rgb(237, 146, 28);
+}
+
+#result-p{
+  font-size: 40px;
+  color: rgb(237, 146, 28);;
+}
+
+#sad-happy{
+  width: 365px;
+  height: 500px;
+}
+
+.sadpic{
+  background-image: url('../images/pngegg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.happy{
+  background-image: url('../images/winner.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 
 .ship{
   background-image: url('../images/pacmanup.png');

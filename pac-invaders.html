@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Linked style sheet to html -->
+  <link rel="stylesheet" href="styles/pac-invaders.css">
+
+  <!-- Linked pac-invaders javascript file to html -->
+  <script src="scripts/pac-invaders.js"></script>
+
+  <!-- Using footawesome to add features to game eg. play and pause music button -->
+  <script src="https://kit.fontawesome.com/5754e9fa11.js" crossorigin="anonymous"></script>
+  <title>SPACE INVADERS</title>
+</head>
+
+<!-- Body of game -->
+<body>
+  <!-- Div element to add fontawesome play and pause button -->
+  <div>
+    <i class="fas fa-play fa-2x"></i> 
+  </div>
+
+  <!-- Header of game which include start game button, score and lives of player -->
+  <header class="header">
+    <button id="start">START GAME</button>
+    <P id="score">Score:<span id="score-number">0</span></P>
+    <P id="lives">Lives:<span id="lives-number">3</span></P>
+  </header>
+
+  <!-- Results screen div where if a play wins it displays -->
+  <div class="result-screen">
+    <h1 id="vic-los"></h1>
+    <p id="result-p"></p>
+    <p id="score-p"></p>
+    <div id="sad-happy"></div>
+  </div>
+
+  <!-- Div element that hold the grid of the game when created -->
+  <div class="grid-wrapper">
+    <div class="grid"></div>
+  </div>
+</body>
+</html>
