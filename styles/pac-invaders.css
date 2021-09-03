@@ -99,8 +99,13 @@ body{
   color: rgb(237, 146, 28);;
 }
 
-#sad-happy{
+#sad{
   width: 365px;
+  height: 500px;
+}
+
+#happy{
+  width: 500px;
   height: 500px;
 }
 
@@ -110,7 +115,7 @@ body{
   background-size: cover;
 }
 
-.happy{
+.happypic{
   background-image: url('../images/winner.png');
   background-repeat: no-repeat;
   background-size: cover;

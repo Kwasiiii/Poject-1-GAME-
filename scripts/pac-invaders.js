@@ -19,7 +19,8 @@ function init(){
   const resultScreen = document.querySelector('.result-screen')//Declare div result screen
   const resultH = document.getElementById('vic-los')//Declare result screen title
   const resultP = document.getElementById('result-p')//Declare result screen paragraph
-  const happySad = document.getElementById('sad-happy')//Declare result screen image
+  const sad = document.getElementById('sad')//Declare result screen image
+  const happy = document.getElementById('happy')//Declare result screen image
 
 
   //Variables
@@ -55,6 +56,7 @@ function init(){
     addPacman(startingPosition) //adds ship to starting position
     addAliens()//adds alien to grid
     alienBullet()
+    moveAliens()
   }
 
   //create a function for theme song @para event
@@ -145,48 +147,50 @@ function init(){
 
   //create a function that moves alien across the grid and if they hit the edge they move down 
   function moveAliens(){
-    const leftborder = alienInvaders[0] % width === 0 //collision check of the left side of the grid
-    const rightborder = alienInvaders[alienInvaders.length - 1] % width === width - 1 //collision check on the right side of the grid 
-    removeAliens()//removes aliens from a cell
-    if (rightborder && moveRight){ //if statement with collision check as condition 
-      for (let i = 0; i < alienInvaders.length; i++){
-        alienInvaders[i] += width + 1
-        direction = - 1
-        moveRight = false
+    const move = setInterval(()=>{
+      const leftborder = alienInvaders[0] % width === 0 //collision check of the left side of the grid
+      const rightborder = alienInvaders[alienInvaders.length - 1] % width === width - 1 //collision check on the right side of the grid 
+      removeAliens()//removes aliens from a cell
+      if (rightborder && moveRight){ //if statement with collision check as condition 
+        for (let i = 0; i < alienInvaders.length; i++){
+          alienInvaders[i] += width + 1
+          direction = - 1
+          moveRight = false
+        }
       }
-    }
-    if (leftborder && !moveRight) { //if statement with collision check as condition 
-      for (let i = 0; i < alienInvaders.length; i++){
-        alienInvaders[i] += width - 1
-        direction = 1
-        moveRight = true
+      if (leftborder && !moveRight) { //if statement with collision check as condition 
+        for (let i = 0; i < alienInvaders.length; i++){
+          alienInvaders[i] += width - 1
+          direction = 1
+          moveRight = true
+        }
       }
-    }
-    for (let i = 0; i < alienInvaders.length; i++){ //for loop to move aliens in the right direction
-      alienInvaders[i] += direction
-    }
+      
+      for (let i = 0; i < alienInvaders.length; i++){ //for loop to move aliens in the right direction
+        alienInvaders[i] += direction
+      }
 
-    addAliens() //Add aliens to new position
+      addAliens() //Add aliens to new position
 
-    if (cells[currentPosition].classList.contains(aliens)){ //if statement with condition if cell contains alien and player then lost
-      lost()
-      clearInterval(move)
-    }
-
-    if (deadAlien.length === alienInvaders.length){ //if statement with condition if dead alien equals all aliens then won
-      won()
-      clearInterval(move)
-    }
-
-    for (let i = 0; i < alienInvaders.length; i++){ //for loop to check if aliens touch the edge of grid then game over! Lost!
-      if (alienInvaders[i] > (cells.length)){
+      if (cells[currentPosition].classList.contains(aliens)){ //if statement with condition if cell contains alien and player then lost
         lost()
         clearInterval(move)
       }
-    }
-  }
 
-  const move = setInterval(moveAliens, 500)
+      if (deadAlien.length === alienInvaders.length){ //if statement with condition if dead alien equals all aliens then won
+        won()
+        clearInterval(move)
+      }
+
+      for (let i = 0; i < alienInvaders.length; i++){ //for loop to check if aliens touch the edge of grid then game over! Lost!
+        if (alienInvaders[i] > (cells.length)){
+          lost()
+          clearInterval(move)
+        }
+      }
+    },500)
+    
+  }
 
   function bullet(event){
     let bulletTimer = null
@@ -207,7 +211,6 @@ function init(){
         deadAlien.push(alienRemoved) //push dead removed alien into an array
         alienDeathSound()
       }
-
       if (laserCurrentPosition < width){ //if statement with condition if laser current position is less that width of grid then remove
         cells[laserCurrentPosition].classList.remove(laser)
         clearInterval(bulletTimer) 
@@ -221,28 +224,31 @@ function init(){
   }
 
   function alienBullet(){  
-    let alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))]  
+    let alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))]  //Assign laser position to random alien invader index
+    
     const alibullet = setInterval(()=>{
-      cells[alienLaserPosition].classList.remove(alienLaser)     
-      alienLaserPosition += width
-      cells[alienLaserPosition].classList.add(alienLaser)    
-      
-      if (lives === 0){
+      if (alienLaserPosition < 80) { //if statement with condition alienpositino is less than 80 
+        cells[alienLaserPosition].classList.remove(alienLaser) //remove alien laser class
+        alienLaserPosition += width //move laser downwards
+        cells[alienLaserPosition].classList.add(alienLaser) //adds laser to new position 
+      }
+      if (lives === 0) { //return lost page when lives equal 0
         lost()
         clearInterval(alibullet)
       }
-      if (cells[alienLaserPosition].classList.contains(pacman)){
-        lives --
-        cells[alienLaserPosition].classList.remove(alienLaser) 
+      if (cells[alienLaserPosition].classList.contains(pacman)) { //if statement with condition if cell contain contains pacman and alien laser
+        lives-- //lives decrement
+        cells[alienLaserPosition].classList.remove(alienLaser) //remove alien laser
         pacmanDeathSound()
-        clearInterval(alibullet) 
-      } 
-      if (alienLaserPosition > 90){
-        cells[alienLaserPosition].classList.remove(alienLaser) 
-        alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))]  
-        cells[alienLaserPosition].classList.add(alienLaser)         
+      } else if (alienLaserPosition > 80 && alienLaserPosition < 90) { //if statement with condition if alien laser positin is betwen 80 and 90
+        cells[alienLaserPosition].classList.remove(alienLaser) //remove alien laser
+        alienLaserPosition += width 
+        cells[alienLaserPosition].classList.add(alienLaser) //add alien laser to new position
+      } else if (alienLaserPosition > 90) { //else if statement alien laser position is more than 90
+        cells[alienLaserPosition].classList.remove(alienLaser)//remove alien laser from laser position
+        alienLaserPosition = alienInvaders[(Math.floor(Math.random() * alienInvaders.length))] //assign new laser position
+        cells[alienLaserPosition].classList.add(alienLaser) //add laser to new laser position
       }
-      
     },200)
     liveResult.innerText = lives
   }
@@ -252,11 +258,12 @@ function init(){
     gridwrapper.style.display = 'none' //hides grid wrapper element
     scoreP.style.display = 'none' //hides score display element
     livesP.style.display = 'none' //hides lives display element
+    sad.style.display = 'none'
     resultScreen.style.display = 'flex' //display result screen
     resultH.innerText = 'GAME OVER!' //game over text
     resultP.innerText = 'VICTORY!' //victory text 
     scoreDis.innerText = `SCORE: ${score}` //displays score in result scrren
-    happySad.classList.add('happypic') //add cool image when won
+    happy.classList.add('happypic') //add cool image when won
 
     
   }
@@ -266,17 +273,18 @@ function init(){
     gridwrapper.style.display = 'none' //hides grid wrapper element
     scoreP.style.display = 'none' //hides score display element
     livesP.style.display = 'none' //hides live display element
+    happy.style.display = 'none'
     resultScreen.style.display = 'flex' //display result screen
     resultH.innerText = 'GAME OVER!' //game over text
     resultP.innerText = 'DEFEAT!' //defeat text
     scoreDis.innerText = `SCORE: ${score}` //display results
-    happySad.classList.add('sadpic') //add image when lost
+    sad.classList.add('sadpic') //add image when lost
   }
 
   //Events
   document.addEventListener('keyup', bullet)
   audioBtn.addEventListener('click', themeSong)
-  document.addEventListener('keydown', handleKeyDown) // Listening for key press
+  document.addEventListener('keydown', handleKeyDown)
   start.addEventListener('click', disableButton)
   
 }
